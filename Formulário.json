@@ -1,0 +1,552 @@
+{
+  "name": "Formularío",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "571413df-3b02-4a78-a19e-36a10abbe764",
+              "name": "Nome",
+              "value": "={{ $json.Nome.trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "bb38a76d-4df3-4c04-80ae-ea1fa75f49bc",
+              "name": "Email",
+              "value": "={{ $json.Email.toLowerCase() }}",
+              "type": "string"
+            },
+            {
+              "id": "0fee6e7e-a019-45be-928e-0ed0b071e2dc",
+              "name": "Dia e Hora",
+              "value": "={{ $now.toFormat('dd/MM/yyyy H:mm')}}",
+              "type": "string"
+            },
+            {
+              "id": "7b4d4372-769f-44af-b05e-af14fc9a01c9",
+              "name": "id",
+              "value": "={{  Date.now() + \"_\" + $json.Email.toLowerCase()}}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "df7536e8-fd98-4fa8-9d12-c7dca63cfcbd",
+      "name": "Edita Campos"
+    },
+    {
+      "parameters": {
+        "formTitle": "Fale conosco",
+        "formDescription": "Em breve respondemos!",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nome",
+              "placeholder": "Digite seu nome",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "placeholder": "Digite seu e-mail",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Assunto",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Dúvida geral"
+                  },
+                  {
+                    "option": "Feedback"
+                  },
+                  {
+                    "option": "Problema Técnico"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Produto",
+              "fieldType": "checkbox",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Website"
+                  },
+                  {
+                    "option": "Aplicativo"
+                  },
+                  {
+                    "option": "Painel do Cliente"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Mensagem",
+              "fieldType": "textarea",
+              "placeholder": "Digite sua mensagem",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9806b558-95d1-4347-acf6-89604c49f3a2",
+      "name": "Ao enviara Forms",
+      "webhookId": "0603d7d2-4b65-415d-9673-61c609b4e6ab",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a5693a8e-80c6-4042-b04f-6a19d3d676ec",
+              "name": "Prioridade",
+              "value": "Alta",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        512,
+        -512
+      ],
+      "id": "9720d43c-f132-44e6-8041-47d0b2e27bbd",
+      "name": " Alta"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2c400f8a-d06f-4ece-b3fe-ecc12a145495",
+              "name": "Prioridade",
+              "value": "Baixa",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        144
+      ],
+      "id": "c6ec363b-d128-4a02-8c99-83fcb0545618",
+      "name": "Baixa"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "645a358e-4453-44ee-a6cc-df63984ecb96",
+              "name": "Prioridade ",
+              "value": "Normal",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        0
+      ],
+      "id": "364d4b09-9f03-40d9-b079-cc79fde67af8",
+      "name": "Normal"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1648,
+        -144
+      ],
+      "id": "19f0c7ca-cf4a-49d9-8b17-77c98153ce9e",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "24d11631-2573-4b3c-a062-a5dc2c0c2e9e",
+              "name": "Log Final",
+              "value": "=Chamado  de {{ $json.Nome }}  com prioridade {{$json.Prioridade}}. ID: {{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1936,
+        -128
+      ],
+      "id": "31bb9290-1299-46a6-9d3b-65f0b38abf0c",
+      "name": "Log final"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1040,
+        -496
+      ],
+      "id": "66ae782b-3c64-4494-bc85-147e04c01ef9",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1376,
+        -400
+      ],
+      "id": "8ad4c16b-69bc-46d2-b90a-7258ce7ab4d0",
+      "name": "Wait",
+      "webhookId": "744daab7-73b3-4940-8f3d-1e50d6f7cd1f"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "Produto",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        768,
+        -496
+      ],
+      "id": "b8c83987-4ccf-4427-b0f2-c63c11397884",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9d149e9d-aa83-4f15-814d-fcfda8ef2b6e",
+              "name": "Registro ",
+              "value": "=Problema relatado para {{ $json.Produto }}, dia{{ $('Edita Campos').item.json['Dia e Hora'] }} . ID do ticket:{{ $('Edita Campos').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "e88aa7c8-0e3d-4658-bacb-51af564cb9fc",
+              "name": "ID",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1376,
+        -544
+      ],
+      "id": "eb06ee24-8f59-4a90-aa9a-1d23f8ebc99f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.Assunto\n}}",
+                    "rightValue": "Problema Técnico",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "6efe3e67-27bc-4516-a7b8-f5d9dfcef890"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "e7ec7520-b302-4883-8527-20bdd9e07a69",
+                    "leftValue": "={{ $json.Assunto }}",
+                    "rightValue": "Dúvida geral",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "afae47eb-fc4c-47a5-aca4-52f413ebefb2",
+                    "leftValue": "={{ $json.Assunto }}",
+                    "rightValue": "Opinião",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "c71ddf40-ec3b-4197-820b-2d059094f2bf",
+      "name": "Define prioridade"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1584,
+        -544
+      ],
+      "id": "1f70d166-810f-455f-942d-cfa7b50cd99c",
+      "name": "Convert to File"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Edita Campos": {
+      "main": [
+        [
+          {
+            "node": "Define prioridade",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ao enviara Forms": {
+      "main": [
+        [
+          {
+            "node": "Edita Campos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normal": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    " Alta": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baixa": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Log final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Define prioridade": {
+      "main": [
+        [
+          {
+            "node": " Alta",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Normal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Baixa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "20a685ce-1504-4d75-908d-a84299636e92",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "00d4d15ca5e4e916c936bf931976c6d76574fefe577e507c0fd51b7a091ff2f4"
+  },
+  "id": "RWItJuv9zTiSWWrV",
+  "tags": []
+}
